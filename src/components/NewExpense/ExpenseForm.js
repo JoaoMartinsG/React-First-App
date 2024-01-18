@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import './ExpenseForm.css'
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [userTitle, setUserTitle] = useState('')
   const [userAmount, setUserAmount] = useState('')
   const [userDate, setUserDate] = useState('')
@@ -45,7 +45,19 @@ const ExpenseForm = () => {
   }
 
   const submitHandler = (event) => {
-    event.preventDefault();
+    event.preventDefault()
+
+    const expenseData = {
+      title: userTitle,
+      amount: userAmount,
+      date: new Date(userDate),
+    }
+
+    props.onSaveExpenseData(expenseData);
+
+    setUserTitle('')
+    setUserAmount('')
+    setUserDate('')
   }
 
   return (
@@ -55,6 +67,8 @@ const ExpenseForm = () => {
           <label>Title</label>
           <input
             type="text"
+            // two way binding to not just listen to input but also pass a value back to input
+            value={userTitle}
             onChange={(event) =>
               inputChangeHandler('title', event.target.value)
             }
@@ -65,6 +79,7 @@ const ExpenseForm = () => {
           <label>Amount</label>
           <input
             type="number"
+            value={userAmount}
             onChange={(event) =>
               inputChangeHandler('amount', event.target.value)
             }
@@ -77,6 +92,7 @@ const ExpenseForm = () => {
           <label>Date</label>
           <input
             type="date"
+            value={userDate}
             onChange={(event) => inputChangeHandler('date', event.target.value)}
             min="2021-01-01"
             max="2024-12-31"
