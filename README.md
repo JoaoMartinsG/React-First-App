@@ -1,1 +1,1 @@
-Static Expense tracker App , learning React
+Simple Expense tracker App , learning React
